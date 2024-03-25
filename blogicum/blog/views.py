@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse
 
 posts = [
     {
@@ -42,15 +41,18 @@ posts = [
                 Весь этот день я хлопотал  около вещей: укрывал и
                 укутывал их, чтобы не испортились от дождя.''',
     },
-] 
+]
+
 
 def index(request):
     context = {'post': reversed(posts)}
     return render(request, 'blog/index.html', context)
 
+
 def post_detail(request, id):
     context = {'post': posts[id]}
     return render(request, 'blog/detail.html', context)
+
 
 def category_posts(request, category_slug):
     context = {'category_slug': category_slug}
