@@ -45,7 +45,7 @@ posts = [
     },
 ]
 
-dict_id = {post['id']: post for post in posts}
+posts_id = {post['id']: post for post in posts}
 
 
 def index(request):
@@ -54,11 +54,10 @@ def index(request):
 
 
 def post_detail(request, id):
-    if id in dict_id:
-        context = {'post': dict_id[id]}
-        return render(request, 'blog/detail.html', context)
-    else:
+    if id not in posts_id:
         raise Http404
+    context = {'post': posts_id[id]}
+    return render(request, 'blog/detail.html', context)
 
 
 def category_posts(request, category_slug):
