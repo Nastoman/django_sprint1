@@ -1,3 +1,5 @@
+from django.http import Http404
+
 from django.shortcuts import render
 
 posts = [
@@ -43,6 +45,8 @@ posts = [
     },
 ]
 
+dict_id = {post['id']: post for post in posts}
+
 
 def index(request):
     context = {'post': reversed(posts)}
@@ -50,8 +54,11 @@ def index(request):
 
 
 def post_detail(request, id):
-    context = {'post': posts[id]}
-    return render(request, 'blog/detail.html', context)
+    if id in dict_id:
+        context = {'post': dict_id[id]}
+        return render(request, 'blog/detail.html', context)
+    else:
+        raise Http404
 
 
 def category_posts(request, category_slug):
